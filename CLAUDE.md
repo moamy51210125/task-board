@@ -2,13 +2,63 @@
 
 タスク管理ボードアプリのプロジェクトです。
 
-> 技術スタック・ディレクトリ構成・コマンドは未確定です。決まり次第このファイルに追記してください。
-
 ## プロジェクト概要
 
-- 目的: タスクを一覧・管理できるボード（カンバン形式などを想定）
-- 技術スタック: 未定
-- 起動・ビルド・テストコマンド: 未定
+- 機能: タスクの追加、完了・未完了の切り替え、削除、完了済みタスクのグレー表示
+- データ保存: ブラウザのローカルストレージ（キー: `task-board.tasks`）。サーバー・DBはなし
+
+## デプロイ先
+
+https://moamy51210125.github.io/task-board/
+
+- GitHub Pages で公開。`main` への push で [.github/workflows/deploy.yml](.github/workflows/deploy.yml) が自動ビルド・デプロイする
+- 公開URLがリポジトリ名配下になるため、[vite.config.js](vite.config.js) でビルド時のみ `base: '/task-board/'` を設定している。リポジトリ名を変えたらここも変える
+
+## 技術スタック
+
+| 分類 | 使用技術 |
+|---|---|
+| UI | React 19（関数コンポーネント + Hooks） |
+| ビルド・開発サーバー | Vite 7（`@vitejs/plugin-react`） |
+| 言語 | JavaScript（JSX）。TypeScript は未使用 |
+| スタイル | 素の CSS（CSSフレームワーク・CSS-in-JS は未使用） |
+| ホスティング | GitHub Pages（GitHub Actions でデプロイ） |
+| Node.js | ローカル v26 / CI は v22 |
+
+### コマンド
+
+- `npm install` … 依存パッケージのインストール
+- `npm run dev` … 開発サーバー起動（http://localhost:5173/）
+- `npm run build` … 本番用ビルド（`dist/` に出力）
+- `npm run preview` … ビルド結果の確認
+- テスト・Lint は未導入
+
+### ディレクトリ構成
+
+```
+index.html          エントリHTML
+vite.config.js      Vite設定（GitHub Pages用の base を含む）
+src/
+  main.jsx          Reactの起動処理
+  App.jsx           アプリ本体（タスクの状態管理と画面）
+  App.css           スタイル
+.github/workflows/
+  deploy.yml        GitHub Pages デプロイ用ワークフロー
+```
+
+## コンポーネントの命名規約
+
+現在のコード（[src/App.jsx](src/App.jsx)）に合わせた規約です。新しいコードもこれに従ってください。
+
+- **コンポーネント**: PascalCase の関数コンポーネントにする（例: `App`, `TaskItem`）
+- **ファイル名**: コンポーネント名と同じ PascalCase + `.jsx`（例: `App.jsx`）。1ファイル1コンポーネントを基本とし、`export default` で公開する
+- **配置**: `App` 以外のコンポーネントを追加するときは `src/components/` に置く（今後の方針。現在は `App.jsx` のみ）
+- **スタイル**: コンポーネントと同名の CSS ファイル（例: `App.css`）にまとめる
+- **イベント処理関数**: 「動詞 + 対象」の camelCase（例: `addTask`, `toggleTask`, `deleteTask`）
+- **state**: 名詞の camelCase（例: `tasks`, `text`）。更新関数は `set` + 名前（例: `setTasks`）
+- **定数**: UPPER_SNAKE_CASE（例: `STORAGE_KEY`）
+- **CSS クラス名**: kebab-case（例: `add-form`, `task-list`）。状態は修飾クラスで表す（例: `task done`）
+- **コメント**: 日本語で、処理の意図を短く書く
 
 ## コーディング方針
 
