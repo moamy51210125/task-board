@@ -49,10 +49,9 @@
 - push済みコミットへの `git commit --amend` や `git rebase`
 - リモートの追加・変更（`git remote add`, `git remote set-url`）
 
-### 初期セットアップ（未実施）
+### リポジトリ情報
 
-このフォルダはまだ Git リポジトリではありません。運用開始時に以下が必要です（実行はユーザーの指示を受けてから）。
-
-- `git init`
-- `.gitignore` の作成（`.env`, `node_modules/` などを除外）
-- GitHub リポジトリの作成と `git remote add origin <URL>`
+- リモート: `origin` → https://github.com/moamy51210125/task-board.git
+- デフォルトブランチ: `main`
+- コミット作成者（このリポジトリ内のみ）: `moamy51210125` / `moamy51210125@users.noreply.github.com`
+- `.gitignore` で `.env` などの機密ファイル、`node_modules/`、ビルド成果物を除外済み
